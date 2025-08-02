@@ -1,0 +1,51 @@
+﻿
+@page "/percentage-increase"
+@rendermode InteractiveServer
+
+
+
+<h3 class="mb-4">محاسبه افزایش درصد</h3>
+
+<div class="form-group mb-3">
+    <label>درصد افزایش (%)</label>
+    <input type="number" step="any" @bind="percentage" class="form-control" />
+</div>
+
+<div class="form-group mb-3">
+    <label>عدد اولیه</label>
+    <input type="number" step="any" @bind="originalValue" class="form-control" />
+</div>
+
+<div class="form-group mb-3">
+    <label>مقدار افزایش (محاسبه شده)</label>
+    <input type="number" step="any" value="@increaseAmount" readonly class="form-control bg-light" />
+</div>
+
+<div class="form-group mb-3">
+    <label>عدد جدید (عدد اولیه + افزایش)</label>
+    <input type="number" step="any" value="@newValue" readonly class="form-control bg-light" />
+</div>
+
+<button class="btn btn-primary mb-4" @onclick="CalculateIncrease">محاسبه</button>
+
+@if (showResult)
+{
+    <div class="result-box p-4 rounded" style="font-size:2rem; font-weight:bold; background-color:#e0f7fa; color:#00796b;">
+        نتیجه: عدد جدید برابر است با <span>@newValue</span>
+    </div>
+}
+
+@code {
+    private double percentage;
+    private double originalValue;
+    private double increaseAmount;
+    private double newValue;
+    private bool showResult = false;
+
+    private void CalculateIncrease()
+    {
+        increaseAmount = (originalValue * percentage) / 100.0;
+        newValue = originalValue + increaseAmount;
+        showResult = true;
+    }
+}
